@@ -3,34 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slang Tracker</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Slang Word Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Track the Latest Slang Words</h1>
-        
-        <div class="search-box">
-            <input type="text" id="search" placeholder="Search Slang Word..." onkeyup="searchSlang()">
-            <button onclick="searchSlang()">Search</button>
-        </div>
-
-        <div class="slang-list">
-            <h2>Popular Slang Words</h2>
-            <ul id="slang-list">
-                <!-- Slang words will be populated here by JavaScript -->
-            </ul>
-        </div>
-        
-        <div class="slang-details">
-            <h2>Word Details</h2>
-            <div id="word-info">
-                <!-- Meaning and graph for selected slang word will be displayed here -->
-            </div>
-        </div>
+        <h1>Slang Word Search</h1>
+        <!-- Input field for the user to enter a slang word -->
+        <input type="text" id="slangWord" placeholder="Enter a slang word">
+        <!-- Button to trigger the search -->
+        <button onclick="searchSlang()">Search</button>
+        <!-- Div to display the search results -->
+        <div class="result" id="result"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Function to search for the slang word
+        function searchSlang() {
+            // Get the slang word entered by the user
+            const word = document.getElementById('slangWord').value;
+            // URL to fetch the definition from an API (replace 'API_URL' with the actual API endpoint)
+            const apiUrl = `https://api.urbandictionary.com/v0/define?term=${word}`;
+
+            // Fetch the definition from the API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if there are definitions available
+                    if (data.list && data.list.length > 0) {
+                        // Get the first definition and example sentence
+                        const definition = data.list.definition;
+                        const example = data.list.example;
+                        // Display the definition and example sentence
+                        document.getElementById('result').innerHTML = `
+                            <h2>Definition:</h2>
+                            <p>${definition}</p>
+                            <h2>Example:</h2>
+                            <p>${example}</p>
+                        `;
+                    } else {
+                        // Display a message if no definitions are found
+                        document.getElementById('result').innerHTML = '<p>No definitions found.</p>';
+                    }
+                })
+                .catch(error => {
+                    // Display an error message if the API call fails
+                    document.getElementById('result').innerHTML = '<p>Error fetching definition.</p>';
+                });
+        }
+    </script>
 </body>
 </html>
