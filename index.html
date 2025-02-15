@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slang Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Track the Latest Slang Words</h1>
+        
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search Slang Word..." onkeyup="searchSlang()">
+            <button onclick="searchSlang()">Search</button>
+        </div>
+
+        <div class="slang-list">
+            <h2>Popular Slang Words</h2>
+            <ul id="slang-list">
+                <!-- Slang words will be populated here by JavaScript -->
+            </ul>
+        </div>
+        
+        <div class="slang-details">
+            <h2>Word Details</h2>
+            <div id="word-info">
+                <!-- Meaning and graph for selected slang word will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
